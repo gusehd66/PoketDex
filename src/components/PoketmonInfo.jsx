@@ -6,7 +6,7 @@ import { formatNumbering, mapColorToHex, mapTypeToHex } from "../utils";
 const Base = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${(color) => color};
+  background-color: ${({ color }) => color};
   padding: 20px;
   border-bottom-left-radius: 20%;
   border-bottom-right-radius: 20%;
@@ -80,29 +80,33 @@ const Image = styled.img`
   object-fit: contain;
 `;
 
-const PokemonInfo = ({ id, name, color, types }) => (
-  <Base color={mapColorToHex(color?.name)}>
-    <ImageWrapper>
-      <Image src="/assets/pocketball.svg" />
-    </ImageWrapper>
-    <InfoWrapper>
-      <Name>{name}</Name>
-      <Index>{formatNumbering(id)}</Index>
-    </InfoWrapper>
-    <TypeList>
-      {types?.map(({ type }, idx) => (
-        <TypeWrapper key={idx} color={mapTypeToHex(type.name)}>
-          <TypeInfo src={`/assets/${type.name}.svg`} />
-        </TypeWrapper>
-      ))}
-    </TypeList>
-    <ThumbnailImageWrapper>
-      <ThumbnailImage
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
-        alt="image"
-      />
-    </ThumbnailImageWrapper>
-  </Base>
-);
+const PoketmonInfo = ({ id, name, color, types }) => {
+  return (
+    <Base color={mapColorToHex(color?.name)}>
+      <ImageWrapper>
+        <Image src="/assets/pocketball.svg" />
+      </ImageWrapper>
+      <InfoWrapper>
+        <Name>{name}</Name>
+        {id && <Index>{formatNumbering(id)}</Index>}
+      </InfoWrapper>
+      {types && (
+        <TypeList>
+          {types.map(({ type }, idx) => (
+            <TypeWrapper key={idx} color={mapTypeToHex(type.name)}>
+              <TypeInfo src={`/assets/${type.name}.svg`} />
+            </TypeWrapper>
+          ))}
+        </TypeList>
+      )}
+      <ThumbnailImageWrapper>
+        <ThumbnailImage
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
+          alt="image"
+        />
+      </ThumbnailImageWrapper>
+    </Base>
+  );
+};
 
-export default PokemonInfo;
+export default PoketmonInfo;

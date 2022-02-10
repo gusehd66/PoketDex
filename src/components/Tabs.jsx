@@ -17,6 +17,7 @@ const ListItem = styled.li`
 `;
 
 const TabButton = styled.button`
+  cursor: pointer;
   margin: 0;
   border-radius: 8px;
   box-shadow: 6px 4px 14px 5px rgba(0, 0, 0, 0.21);

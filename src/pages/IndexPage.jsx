@@ -1,5 +1,7 @@
+import React from "react";
+import styled from "@emotion/styled/macro";
+
 import PoketmonList from "../components/PoketmonList";
-import styled from "@emotion/styled";
 
 const Container = styled.div`
   padding: 12px 18px;

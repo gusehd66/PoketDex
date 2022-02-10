@@ -1,11 +1,26 @@
-import styled from "@emotion/styled";
-import usePoketmon from "../hooks/usePoketmon";
+import React from "react";
+import styled from "@emotion/styled/macro";
+import { useNavigate } from "react-router-dom";
+
+import { formatNumbering } from "../utils";
+import usePoketmonQuery from "../hooks/usePoketmonQuery";
 
 const Base = styled.div`
   margin-top: 24px;
 `;
 
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 180px);
+`;
+
+const Loading = styled.img``;
+
 const ListItem = styled.li`
+  cursor: pointer;
   position: relative;
   list-style: none;
   display: flex;
@@ -45,37 +60,27 @@ const Index = styled.p`
   color: #d1d5db;
 `;
 
-const LoadingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 180px);
-`;
-
-const Loading = styled.img``;
+const getImageUrl = (pokemonIndex) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex}.png`;
 
 const PoketmonList = () => {
-  const getImageUrl = (pokemonIndex) =>
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex}.png`;
-
-  const { isLoading, isError, data } = usePoketmon();
-
-  const formatNumbering = (index) => {
-    return `#${String(index).padStart(3, "0")}`;
-  };
+  const { isLoading, isError, data } = usePoketmonQuery();
+  const navigate = useNavigate();
 
   return (
     <Base>
       {isLoading || isError ? (
         <LoadingWrapper>
-          <Loading src="/loding.gif" alt="loading" />
+          <Loading src="/loading.gif" alt="loading" />
         </LoadingWrapper>
       ) : (
         <List>
           {data?.data.results.map((poketmon, idx) => (
-            <ListItem key={poketmon.name}>
-              <Image src={getImageUrl(idx + 1)} />
+            <ListItem
+              key={poketmon.name}
+              onClick={() => navigate(`/${idx + 1}`)}
+            >
+              <Image src={getImageUrl(idx + 1)} alt={poketmon.name} />
               <Name>{poketmon.name}</Name>
               <Index>{formatNumbering(idx + 1)}</Index>
             </ListItem>

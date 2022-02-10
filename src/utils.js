@@ -70,8 +70,8 @@ export const mapTypeToHex = (type) => {
 };
 
 //// 포켓몬의 인덱스를 받아서 #001 형태로 변환
-export const formatNumbering = (pokemonIndex) =>
-  `#${(typeof pokemonIndex === "number"
-    ? String(pokemonIndex)
-    : pokemonIndex
+export const formatNumbering = (poketmonIndex) =>
+  `#${(typeof poketmonIndex === "number"
+    ? String(poketmonIndex)
+    : poketmonIndex
   ).padStart(3, "0")}`;
